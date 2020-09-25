@@ -50,23 +50,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SliverToBoxAdapter(
             child: ContentList(
+              key: PageStorageKey('myList'),
               title: 'My List',
               contentList: myList,
             ),
           ),
           SliverToBoxAdapter(
             child: ContentList(
-                title: 'Netflix Orifinals',
-                contentList: originals,
-                isOriginals: true),
+              key: PageStorageKey('netflixOriginals'),
+              title: 'Netflix Orifinals',
+              contentList: originals,
+              isOriginals: true,
+            ),
           ),
           SliverToBoxAdapter(
             child: ContentList(
+              key: PageStorageKey('trending'),
               title: 'Trending',
               contentList: trending,
             ),
           ),
-          SliverPadding(padding: EdgeInsets.only(top: 300))
+          SliverPadding(padding: EdgeInsets.only(top: 20))
         ],
       ),
       floatingActionButton: FloatingActionButton(

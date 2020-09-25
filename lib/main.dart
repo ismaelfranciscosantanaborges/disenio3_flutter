@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/home_screen.dart';
+import 'package:flutter_netflix_responsive_ui/screens/screens.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: NavScreen(),
     );
   }
 }

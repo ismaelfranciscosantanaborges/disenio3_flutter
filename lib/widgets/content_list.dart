@@ -4,10 +4,11 @@ import 'package:flutter_netflix_responsive_ui/models/models.dart';
 
 class ContentList extends StatelessWidget {
   const ContentList({
+    Key key,
     @required this.title,
     @required this.contentList,
     this.isOriginals = false,
-  });
+  }) : super(key: key);
   final String title;
   final List<Content> contentList;
   final isOriginals;
