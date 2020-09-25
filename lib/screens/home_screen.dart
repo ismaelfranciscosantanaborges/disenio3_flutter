@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_netflix_responsive_ui/cubit/app_bar_cubit.dart';
 import 'package:flutter_netflix_responsive_ui/data/data.dart';
 import 'package:flutter_netflix_responsive_ui/widgets/widget.dart';
 
@@ -11,15 +13,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ScrollController _scrollController;
-  double _scrollOffset;
 
   @override
   void initState() {
-    _scrollOffset = 0.0;
     _scrollController = ScrollController()
       ..addListener(() {
-        _scrollOffset = _scrollController.offset;
-        setState(() {});
+        context.bloc<AppBarCubit>().setOffset(_scrollController.offset);
       });
     super.initState();
   }
@@ -32,8 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: CustomAppBar(
-          scrollOffset: _scrollOffset,
+        child: BlocBuilder<AppBarCubit, double>(
+          builder: (context, state) {
+            return CustomAppBar(
+              scrollOffset: context.bloc<AppBarCubit>().state,
+            );
+          },
         ),
       ),
       body: CustomScrollView(
@@ -45,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPadding(
             padding: EdgeInsets.only(top: 20),
             sliver: SliverToBoxAdapter(
-              child: Previews(title: 'Previews', contentList: previews),
+              child: Previews(
+                  key: PageStorageKey('previews'),
+                  title: 'Previews',
+                  contentList: previews),
             ),
           ),
           SliverToBoxAdapter(

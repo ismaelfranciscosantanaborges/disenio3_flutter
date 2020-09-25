@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_netflix_responsive_ui/cubit/app_bar_cubit.dart';
 import 'package:flutter_netflix_responsive_ui/screens/screens.dart';
+import 'package:flutter_netflix_responsive_ui/widgets/widget.dart';
 
 class NavScreen extends StatefulWidget {
   NavScreen({Key key}) : super(key: key);
@@ -31,29 +34,34 @@ class _NavScreenState extends State<NavScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        currentIndex: _currentIndex,
-        items: _icons
-            .map(
-              (title, icon) => MapEntry(
-                title,
-                BottomNavigationBarItem(
-                  icon: Icon(icon, size: 30),
-                  title: Text(title),
-                ),
-              ),
-            )
-            .values
-            .toList(),
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) => setState(() => _currentIndex = index),
+    return BlocProvider<AppBarCubit>(
+      create: (context) => AppBarCubit(),
+      child: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: !Responsive.isDesktop(context)
+            ? BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.black,
+                currentIndex: _currentIndex,
+                items: _icons
+                    .map(
+                      (title, icon) => MapEntry(
+                        title,
+                        BottomNavigationBarItem(
+                          icon: Icon(icon, size: 30),
+                          title: Text(title),
+                        ),
+                      ),
+                    )
+                    .values
+                    .toList(),
+                selectedFontSize: 11,
+                unselectedFontSize: 11,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.grey,
+                onTap: (index) => setState(() => _currentIndex = index),
+              )
+            : null,
       ),
     );
   }
