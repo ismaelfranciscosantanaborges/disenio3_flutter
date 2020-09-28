@@ -12,12 +12,9 @@ class ContentHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        height: 500.0,
-        child: Responsive(
-          movile: _ContentHeaderMovile(featuredContent: featuredContent),
-          desktop: _ContentHeaderDesktop(featuredContent: featuredContent),
-        ),
+      child: Responsive(
+        movile: _ContentHeaderMovile(featuredContent: featuredContent),
+        desktop: _ContentHeaderDesktop(featuredContent: featuredContent),
       ),
     );
   }
@@ -52,55 +49,58 @@ class _ContentHeaderMovile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(featuredContent.imageUrl),
-              fit: BoxFit.cover,
+    return Container(
+      height: 500,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(featuredContent.imageUrl),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.transparent, Colors.black],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.transparent, Colors.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 110,
-          child: Container(
-            width: 250,
-            child: Image.asset(featuredContent.titleImageUrl),
+          Positioned(
+            bottom: 110,
+            child: Container(
+              width: 250,
+              child: Image.asset(featuredContent.titleImageUrl),
+            ),
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              VerticalIconButton(
-                icon: Icons.add,
-                title: 'My List',
-                onTap: () => print('My List'),
-              ),
-              _PlayButton(),
-              VerticalIconButton(
-                icon: Icons.info_outline,
-                title: 'Info',
-                onTap: () => print('Info'),
-              ),
-            ],
-          ),
-        )
-      ],
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                VerticalIconButton(
+                  icon: Icons.add,
+                  title: 'My List',
+                  onTap: () => print('My List'),
+                ),
+                _PlayButton(),
+                VerticalIconButton(
+                  icon: Icons.info_outline,
+                  title: 'Info',
+                  onTap: () => print('Info'),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -155,12 +155,22 @@ class __ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
                     fit: BoxFit.cover,
                   ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.transparent, Colors.black],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: -1.0,
+            child: AspectRatio(
+              aspectRatio: _videoController.value.initialized
+                  ? _videoController.value.aspectRatio
+                  : 2.344,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.black, Colors.transparent],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
               ),
             ),
           ),
